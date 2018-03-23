@@ -37,8 +37,24 @@ namespace Kassa
         {
             if (Convert.ToDouble(Hind.Text) > 0)
             {
-                Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
-                list.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                var matches = list.Where(p => String.Equals(p.Nimi, Nimetus.Text, StringComparison.CurrentCulture));
+
+                if (matches.Any())
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Nimi == Nimetus.Text)
+                        {
+                            item.Kogus += 1;
+                        }
+                    }
+                    Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                }
+                else
+                {
+                    Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                    list.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) }); 
+                }
             }
         }
 
