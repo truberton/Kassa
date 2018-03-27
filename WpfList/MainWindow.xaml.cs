@@ -29,6 +29,7 @@ namespace Kassa
             OstukorvList = new List<Ostukorv>();
             Poodlist = new List<Ostukorv>();
             Pood_Listview.ItemsSource = Poodlist;
+            Ostukorv_Listview.ItemsSource = OstukorvList;
         }
 
         private void todoListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,7 +59,8 @@ namespace Kassa
 
         private void Eemalda_Click(object sender, RoutedEventArgs e)
         {
-            Ostukorv_Listview.Items.Remove(Pood_Listview.SelectedItem);
+            //Ostukorv_Listview.Items.Remove(Pood_Listview.SelectedItem);
+            Poodlist.RemoveAt(Pood_Listview.SelectedIndex);
         }
 
         private void Osta_Click(object sender, RoutedEventArgs e)
@@ -75,8 +77,7 @@ namespace Kassa
         {
             if (!string.IsNullOrWhiteSpace(Kogus.Text))
             {
-                Ostukorv_Listview.Items.Add(Pood_Listview.SelectedValue);
-                OstukorvList.Add(new Ostukorv { Nimi = Pood_Listview.SelectedValuePath = "Nimi", Kogus = 1, });
+                OstukorvList.Add(OstukorvList.ElementAt(Ostukorv_Listview.SelectedIndex));
             }
         }
 
