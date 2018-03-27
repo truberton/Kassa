@@ -77,7 +77,7 @@ namespace Kassa
         {
             if (!string.IsNullOrWhiteSpace(Kogus.Text))
             {
-                OstukorvList.Add(OstukorvList.ElementAt(Ostukorv_Listview.SelectedIndex));
+
             }
         }
 
