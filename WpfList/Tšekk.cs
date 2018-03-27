@@ -21,7 +21,7 @@ namespace Kassa
                 string KoguseTühik = new string(' ', 7 - Convert.ToString(item.Kogus).Length);
                 string HinnaTühik = new string(' ', 7 - Convert.ToString(item.Hind).Length);
 
-                //Tekst.Add(string.Format("{0}x {1} - €{2}", Convert.ToString(item.Kogus), item.Nimi, item.Hind));
+                //Tegin nii, et tekst ja numbrid jääksid nii ja naa samale joonele
                 Tekst.Add(string.Format("{0}" + NimeTühik + "{1}" + KoguseTühik + "{2}" + HinnaTühik + "{3}", item.Nimi, Convert.ToString(item.Kogus), item.Hind, item.Hind * item.Kogus));
                 kokku += item.Hind * item.Kogus;
             }

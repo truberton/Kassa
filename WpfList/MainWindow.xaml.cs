@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 
 namespace Kassa
@@ -45,17 +37,11 @@ namespace Kassa
             var SarnaneNimi = Poodlist.FirstOrDefault(x => x.Nimi.Contains(Nimetus.Text));
             if (Convert.ToDouble(Hind.Text) > 0 && SarnaneNimi == null)
             {
-                //Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
                 Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+
                 Pood_Listview.ItemsSource = null;
                 Pood_Listview.ItemsSource = Poodlist;
             }
-        }
-
-        private void Eemalda_Click(object sender, RoutedEventArgs e)
-        {
-            //Ostukorv_Listview.Items.Remove(Pood_Listview.SelectedItem);
-            //Poodlist.RemoveAt(Pood_Listview.SelectedIndex);
         }
 
         private void Osta_Click(object sender, RoutedEventArgs e)
@@ -64,17 +50,18 @@ namespace Kassa
             tšekk.Print(OstukorvList);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LisaOstukorvi_Click(object sender, RoutedEventArgs e)
         {
             if (Pood_Listview.SelectedIndex > -1)
             {
+                //Vaatab kas ostukorvis on juba olemas toode
                 var matches = OstukorvList.Where(p => String.Equals(p.Nimi, Poodlist[Pood_Listview.SelectedIndex].Nimi, StringComparison.CurrentCulture));
 
                 if (matches.Any())
                 {
                     foreach (var item in matches)
                     {
-                        item.Kogus += 1;
+                        item.Kogus += int.Parse(Kogus.Text);
                     }
                     Ostukorv_Listview.ItemsSource = null;
                     Ostukorv_Listview.ItemsSource = OstukorvList;
@@ -84,9 +71,31 @@ namespace Kassa
                     OstukorvList.Add(Poodlist[Pood_Listview.SelectedIndex]);
 
                     OstukorvList[OstukorvList.Count - 1].Kogus = int.Parse(Kogus.Text);
+
+                    //itemssource kirjutan nii palju igal pool, sest listview ei uuenda muidu, kui muuta listi
                     Ostukorv_Listview.ItemsSource = null;
                     Ostukorv_Listview.ItemsSource = OstukorvList;
                 } 
+            }
+            else
+            {
+                MessageBox.Show("Palun vali midagi");
+            }
+        }
+
+        private void Eemalda_Click(object sender, RoutedEventArgs e)
+        {
+            int index = Ostukorv_Listview.SelectedIndex;
+            if (index > -1)
+            {
+                OstukorvList.RemoveAt(index);
+
+                Ostukorv_Listview.ItemsSource = null;
+                Ostukorv_Listview.ItemsSource = OstukorvList;
+            }
+            else
+            {
+                MessageBox.Show("Palun vali midagi");
             }
         }
 

@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kassa"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="592.458">
+        Title="Gerdi Kassa" Height="350" Width="592.458">
     <Grid Margin="10">
         <TextBox x:Name="Nimetus" HorizontalAlignment="Left" Height="23" Margin="267,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="287"/>
         <Label Content="Nimetus" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Hind" HorizontalAlignment="Left" Margin="267,69,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Hind" HorizontalAlignment="Left" Height="23" Margin="267,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="75" PreviewTextInput="Hind_PreviewTextInput"/>
-        <Label Content="Kogus" HorizontalAlignment="Left" Margin="299,185,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Kogus" HorizontalAlignment="Left" Height="23" Margin="304,216,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="38" PreviewTextInput="Kogus_PreviewTextInput"/>
-        <Button x:Name="btnLisa" Content="Lisa" HorizontalAlignment="Left" Margin="479,100,0,0" VerticalAlignment="Top" Width="75" Click="btnLisa_Click"/>
+        <Label Content="Hind" HorizontalAlignment="Left" Margin="267,65,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Hind" HorizontalAlignment="Left" Height="23" Margin="267,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="75" PreviewTextInput="Hind_PreviewTextInput"/>
+        <Label Content="Kogus" HorizontalAlignment="Left" Margin="299,148,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Kogus" HorizontalAlignment="Left" Height="23" Margin="304,179,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="38" PreviewTextInput="Kogus_PreviewTextInput"/>
+        <Button x:Name="btnLisa" Content="Lisa" HorizontalAlignment="Left" Margin="479,94,0,0" VerticalAlignment="Top" Width="75" Click="btnLisa_Click"/>
         <ListView x:Name="Pood_Listview" HorizontalAlignment="Left" Height="279" Margin="10,10,0,0" VerticalAlignment="Top" Width="252">
             <ListView.View>
                 <GridView>
@@ -22,9 +22,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Eemalda" Content="Eemalda" HorizontalAlignment="Left" Margin="479,125,0,0" VerticalAlignment="Top" Width="75" Click="Eemalda_Click"/>
-        <Button x:Name="Osta" Content="Osta" HorizontalAlignment="Left" Margin="267,269,0,0" VerticalAlignment="Top" Width="75" Click="Osta_Click"/>
-        <Button Content="Lisa ostukorvi" HorizontalAlignment="Left" Margin="267,244,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="Osta" Content="Osta" HorizontalAlignment="Left" Margin="267,259,0,0" VerticalAlignment="Top" Width="75" Click="Osta_Click" Height="30"/>
+        <Button x:Name="LisaOstukorvi" Content="Lisa ostukorvi" HorizontalAlignment="Left" Margin="267,207,0,0" VerticalAlignment="Top" Width="75" Click="LisaOstukorvi_Click"/>
         <ListView x:Name="Ostukorv_Listview" HorizontalAlignment="Left" Height="141" Margin="347,150,0,0" VerticalAlignment="Top" Width="207">
             <ListView.View>
                 <GridView>
@@ -35,5 +34,6 @@
             </ListView.View>
         </ListView>
         <Label Content="Ostukorv" HorizontalAlignment="Left" Margin="347,119,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Eemalda" Content="Eemalda" HorizontalAlignment="Left" Margin="479,125,0,0" VerticalAlignment="Top" Width="75" Click="Eemalda_Click"/>
     </Grid>
 </Window>
