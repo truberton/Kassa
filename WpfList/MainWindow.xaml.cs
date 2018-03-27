@@ -46,6 +46,7 @@ namespace Kassa
                         if (item.Nimi == Nimetus.Text)
                         {
                             item.Kogus += 1;
+                            item.Hind += Convert.ToDouble(Hind.Text);
                         }
                     }
                     Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
