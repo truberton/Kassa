@@ -28,6 +28,7 @@ namespace Kassa
             InitializeComponent();
             OstukorvList = new List<Ostukorv>();
             Poodlist = new List<Ostukorv>();
+            Pood_Listview.ItemsSource = Poodlist;
         }
 
         private void todoListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,12 +44,14 @@ namespace Kassa
 
                 if (matches.Any())
                 {
-                    
+
                 }
                 else
                 {
-                    Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                    //Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
                     Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                    Pood_Listview.ItemsSource = null;
+                    Pood_Listview.ItemsSource = Poodlist;
                 }
             }
         }
@@ -62,7 +65,7 @@ namespace Kassa
         {
             foreach (var item in Ostukorv_Listview.Items)
             {
-                
+
             }
             var tšekk = new Tšekk();
             tšekk.Print(OstukorvList);
@@ -73,10 +76,10 @@ namespace Kassa
             if (!string.IsNullOrWhiteSpace(Kogus.Text))
             {
                 Ostukorv_Listview.Items.Add(Pood_Listview.SelectedValue);
-                OstukorvList.Add(new Ostukorv { Nimi = Pood_Listview.SelectedValuePath = "Nimi", Kogus = 1, Hind = int.Parse(Pood_Listview.SelectedValuePath = "Hind")});
+                OstukorvList.Add(new Ostukorv { Nimi = Pood_Listview.SelectedValuePath = "Nimi", Kogus = 1, });
             }
         }
-        
+
     }
     public class Ostukorv
     {
