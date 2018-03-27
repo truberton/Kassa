@@ -60,7 +60,7 @@ namespace Kassa
         private void Eemalda_Click(object sender, RoutedEventArgs e)
         {
             //Ostukorv_Listview.Items.Remove(Pood_Listview.SelectedItem);
-            Poodlist.RemoveAt(Pood_Listview.SelectedIndex);
+            //Poodlist.RemoveAt(Pood_Listview.SelectedIndex);
         }
 
         private void Osta_Click(object sender, RoutedEventArgs e)
@@ -77,7 +77,11 @@ namespace Kassa
         {
             if (!string.IsNullOrWhiteSpace(Kogus.Text))
             {
+                OstukorvList.Add(Poodlist[Pood_Listview.SelectedIndex]);
 
+                OstukorvList[OstukorvList.Count - 1].Kogus = int.Parse(Kogus.Text);
+                Ostukorv_Listview.ItemsSource = null;
+                Ostukorv_Listview.ItemsSource = OstukorvList;
             }
         }
 
