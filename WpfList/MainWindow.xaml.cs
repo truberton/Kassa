@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Kassa
 {
@@ -26,8 +27,10 @@ namespace Kassa
         public MainWindow()
         {
             InitializeComponent();
+
             OstukorvList = new List<Ostukorv>();
             Poodlist = new List<Ostukorv>();
+
             Pood_Listview.ItemsSource = Poodlist;
             Ostukorv_Listview.ItemsSource = OstukorvList;
         }
@@ -39,21 +42,13 @@ namespace Kassa
 
         private void btnLisa_Click(object sender, RoutedEventArgs e)
         {
-            if (Convert.ToDouble(Hind.Text) > 0)
+            var SarnaneNimi = Poodlist.FirstOrDefault(x => x.Nimi.Contains(Nimetus.Text));
+            if (Convert.ToDouble(Hind.Text) > 0 && SarnaneNimi == null)
             {
-                var matches = Poodlist.Where(p => String.Equals(p.Nimi, Nimetus.Text, StringComparison.CurrentCulture));
-
-                if (matches.Any())
-                {
-
-                }
-                else
-                {
-                    //Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
-                    Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
-                    Pood_Listview.ItemsSource = null;
-                    Pood_Listview.ItemsSource = Poodlist;
-                }
+                //Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                Pood_Listview.ItemsSource = null;
+                Pood_Listview.ItemsSource = Poodlist;
             }
         }
 
@@ -65,26 +60,49 @@ namespace Kassa
 
         private void Osta_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in Ostukorv_Listview.Items)
-            {
-
-            }
             var tšekk = new Tšekk();
             tšekk.Print(OstukorvList);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Kogus.Text))
+            if (Pood_Listview.SelectedIndex > -1)
             {
-                OstukorvList.Add(Poodlist[Pood_Listview.SelectedIndex]);
+                var matches = OstukorvList.Where(p => String.Equals(p.Nimi, Poodlist[Pood_Listview.SelectedIndex].Nimi, StringComparison.CurrentCulture));
 
-                OstukorvList[OstukorvList.Count - 1].Kogus = int.Parse(Kogus.Text);
-                Ostukorv_Listview.ItemsSource = null;
-                Ostukorv_Listview.ItemsSource = OstukorvList;
+                if (matches.Any())
+                {
+                    foreach (var item in matches)
+                    {
+                        item.Kogus += 1;
+                    }
+                    Ostukorv_Listview.ItemsSource = null;
+                    Ostukorv_Listview.ItemsSource = OstukorvList;
+                }
+                else
+                {
+                    OstukorvList.Add(Poodlist[Pood_Listview.SelectedIndex]);
+
+                    OstukorvList[OstukorvList.Count - 1].Kogus = int.Parse(Kogus.Text);
+                    Ostukorv_Listview.ItemsSource = null;
+                    Ostukorv_Listview.ItemsSource = OstukorvList;
+                } 
             }
         }
 
+        //Algab StackOverflow Copy-Paste https://stackoverflow.com/questions/1268552/how-do-i-get-a-textbox-to-only-accept-numeric-input-in-wpf
+        private void Hind_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void Kogus_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        //Lõppeb StackOverflow Copy-Paste
     }
     public class Ostukorv
     {
