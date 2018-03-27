@@ -20,12 +20,14 @@ namespace Kassa
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Ostukorv> list { get; private set; }
+        public List<Ostukorv> OstukorvList { get; private set; }
+        public List<Ostukorv> Poodlist { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            list = new List<Ostukorv>();
+            OstukorvList = new List<Ostukorv>();
+            Poodlist = new List<Ostukorv>();
         }
 
         private void todoListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,40 +39,45 @@ namespace Kassa
         {
             if (Convert.ToDouble(Hind.Text) > 0)
             {
-                var matches = list.Where(p => String.Equals(p.Nimi, Nimetus.Text, StringComparison.CurrentCulture));
+                var matches = Poodlist.Where(p => String.Equals(p.Nimi, Nimetus.Text, StringComparison.CurrentCulture));
 
                 if (matches.Any())
                 {
-                    foreach (var item in list)
-                    {
-                        if (item.Nimi == Nimetus.Text)
-                        {
-                            item.Kogus += 1;
-                            item.Hind += Convert.ToDouble(Hind.Text);
-                        }
-                    }
-                    Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                    
                 }
                 else
                 {
-                    Ostukorv_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
-                    list.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) }); 
+                    Pood_Listview.Items.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+                    Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
                 }
             }
         }
 
         private void Eemalda_Click(object sender, RoutedEventArgs e)
         {
-            Ostukorv_Listview.Items.Remove(Ostukorv_Listview.SelectedItem);
+            Ostukorv_Listview.Items.Remove(Pood_Listview.SelectedItem);
         }
 
         private void Osta_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in Ostukorv_Listview.Items)
+            {
+                
+            }
             var tšekk = new Tšekk();
-            tšekk.Print(list);
+            tšekk.Print(OstukorvList);
         }
-    }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(Kogus.Text))
+            {
+                Ostukorv_Listview.Items.Add(Pood_Listview.SelectedValue);
+                OstukorvList.Add(new Ostukorv { Nimi = Pood_Listview.SelectedValuePath = "Nimi", Kogus = 1, Hind = int.Parse(Pood_Listview.SelectedValuePath = "Hind")});
+            }
+        }
+        
+    }
     public class Ostukorv
     {
         public string Nimi { get; set; }
