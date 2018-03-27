@@ -22,8 +22,8 @@ namespace Kassa
                 Tekst.Add(string.Format("{0}" + NimeTühik + "{1}" + KoguseTühik + "{2}" + HinnaTühik + "{3}", item.Nimi, Convert.ToString(item.Kogus), item.Hind, item.Hind * item.Kogus));
                 kokku += item.Hind * item.Kogus;
             }
+            Tekst.Add("------------------------------" + Environment.NewLine + "Kokku: €" + kokku);
             File.WriteAllLines("Tšekk.txt", Tekst);
-            File.AppendAllText("Tšekk.txt", "-------------------------" + Environment.NewLine + "Kokku: €" + kokku);
 
             Process.Start("Tšekk.txt");
         }

@@ -42,6 +42,9 @@ namespace Kassa
                 Pood_Listview.ItemsSource = null;
                 Pood_Listview.ItemsSource = Poodlist;
             }
+
+            Nimetus.Text = "";
+            Hind.Text = "";
         }
 
         private void Osta_Click(object sender, RoutedEventArgs e)
@@ -75,7 +78,7 @@ namespace Kassa
                     //itemssource kirjutan nii palju igal pool, sest listview ei uuenda muidu, kui muuta listi
                     Ostukorv_Listview.ItemsSource = null;
                     Ostukorv_Listview.ItemsSource = OstukorvList;
-                } 
+                }
             }
             else
             {
