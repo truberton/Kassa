@@ -105,7 +105,7 @@ namespace Kassa
         //Algab StackOverflow Copy-Paste https://stackoverflow.com/questions/1268552/how-do-i-get-a-textbox-to-only-accept-numeric-input-in-wpf
         private void Hind_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9.]+");
+            Regex regex = new Regex("[^0-9.,]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
