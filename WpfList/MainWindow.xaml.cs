@@ -35,12 +35,16 @@ namespace Kassa
         private void btnLisa_Click(object sender, RoutedEventArgs e)
         {
             var SarnaneNimi = Poodlist.FirstOrDefault(x => x.Nimi.Contains(Nimetus.Text));
-            if (Convert.ToDouble(Hind.Text) > 0 && SarnaneNimi == null)
+            if (!string.IsNullOrWhiteSpace(Hind.Text) && SarnaneNimi == null && !string.IsNullOrWhiteSpace(Nimetus.Text))
             {
                 Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
 
                 Pood_Listview.ItemsSource = null;
                 Pood_Listview.ItemsSource = Poodlist;
+            }
+            else
+            {
+                MessageBox.Show("Palun täida kõik vajalikud väljad");
             }
 
             Nimetus.Text = "";
