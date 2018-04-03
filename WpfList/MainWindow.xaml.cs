@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Kassa
 {
@@ -23,6 +24,18 @@ namespace Kassa
             OstukorvList = new List<Ostukorv>();
             Poodlist = new List<Ostukorv>();
 
+            if (File.Exists("Tooted.txt"))
+            {
+                IEnumerable<String> Lines = File.ReadLines("Tooted.txt");
+
+                foreach (var line in Lines)
+                {
+                    string[] tekst = line.Split('|');
+
+                    Poodlist.Add(new Ostukorv { Nimi = tekst[0], Hind = Convert.ToDouble(tekst[1]) });
+                } 
+            }
+
             Pood_Listview.ItemsSource = Poodlist;
             Ostukorv_Listview.ItemsSource = OstukorvList;
         }
@@ -38,6 +51,9 @@ namespace Kassa
             if (!string.IsNullOrWhiteSpace(Hind.Text) && SarnaneNimi == null && !string.IsNullOrWhiteSpace(Nimetus.Text))
             {
                 Poodlist.Add(new Ostukorv { Nimi = Nimetus.Text, Kogus = int.Parse(Kogus.Text), Hind = Convert.ToDouble(Hind.Text) });
+
+                //Salvestab tooted txt faili
+                File.AppendAllText("Tooted.txt", Nimetus.Text + "|" + Hind.Text + Environment.NewLine);
 
                 Pood_Listview.ItemsSource = null;
                 Pood_Listview.ItemsSource = Poodlist;
